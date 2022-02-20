@@ -23,7 +23,7 @@ tar -zxvf rtsp-simple-server_v0.17.16_linux_armv7.tar.gz
 sudo apt-get -y install nginx
 wget http://github.com/fatedier/frp/releases/download/v0.39.1/frp_0.39.1_linux_arm.tar.gz
 tar -zxvf frp_0.39.1_linux_arm.tar.gz
-sed -i "/^exit 0/i\python3 /home/pi/py/main.py &" /etc/rc.local
+sed -i "/^exit 0/i\python3 /home/pi/pi-hd-fpv/py/main.py &" /etc/rc.local
 echo '
 dtoverlay=tc358743 
 dtoverlay=cma,cma-128
