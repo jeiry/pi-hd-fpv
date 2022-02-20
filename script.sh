@@ -15,6 +15,7 @@ sudo apt-get -y apt install gstreamer1.0-rtsp
 sudo apt-get -y install python3-pip
 sudo apt-get -y install libatlas-base-dev
 sudo apt-get -y install git
+git clone https://github.com/jeiry/pi-hd-fpv.git
 sudo pip3 install flask
 sudo pip3 install numpy
 wget http://github.com/aler9/rtsp-simple-server/releases/download/v0.17.16/rtsp-simple-server_v0.17.16_linux_armv7.tar.gz
