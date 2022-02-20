@@ -2,4 +2,7 @@
 
 ### step 1
 
-https://raw.githubusercontent.com/jeiry/pi-hd-fpv/main/script.sh
+```
+wget https://raw.githubusercontent.com/jeiry/pi-hd-fpv/main/script.sh
+chmod -R 777 script.sh
+```
