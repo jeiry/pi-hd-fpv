@@ -52,7 +52,7 @@
 
     <div class="input-group mb-3">
         <span class="input-group-text">服务器地址</span>
-        <input type="text" class="form-control" :value="streaming+'://'+hostname+':'+port+'/streaming'" id="fullurl">
+        <input type="text" class="form-control" :value="streaming+'://'+hostname+':'+port+''+streamPath" id="fullurl">
         <button class="btn btn-outline-secondary btn" type="button" id="button-addon2" data-clipboard-target="#fullurl">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
@@ -76,7 +76,7 @@
                 <option value="rtmp">RTMP [TCP]</option>
                 <option value="rtsp">RTSP [TCP]仅视频</option>
                 <option value="hls" disabled>HLS [TCP]</option>
-                <option value="srt" disabled>SRT [UDP]</option>
+                <option value="srt">SRT [UDP]listener模式</option>
             </select>
         </div>
 

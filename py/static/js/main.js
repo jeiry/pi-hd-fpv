@@ -8,6 +8,7 @@ const app = {
             serverType: "local",
             resolution: "",
             streaming: "rtmp",
+            streamPath:"/streaming",
             bitrate: "2000000",
             fps: "30",
             audionbitrate: "320000",
@@ -134,11 +135,17 @@ const app = {
             console.log(selected)
             if(selected == 0){
                 this.streaming = "rtmp"
+                this.streamPath = "/streaming"
                 this.port = 1935
             }else if(selected == 1){
                 this.streaming = "rtsp"
+                this.streamPath = "/streaming"
                 this.port = 8554
                 this.audionCard = 'mute'
+            }else if(selected == 3){
+                this.streaming = "srt"
+                this.streamPath = "?mode=caller&latency=0"
+                this.port = 9999
             }
         }
     }

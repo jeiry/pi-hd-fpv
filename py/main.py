@@ -118,6 +118,22 @@ def submit():
             'h264parse  ! '
             'rtspclientsink name=s location="rtsp://%s:%s/streaming"'%(data['serverUrl'],data['port'])
         ]
+    elif data['streaming'] == 'srt':
+        pipelineBase = [
+            'gst-launch-1.0 -vvv v4l2src ! '
+            '"video/x-raw,width=%s,height=%s,framerate=%s/1,format=UYVY" !'%(resolution[0],resolution[1],data['fps']),
+            'v4l2h264enc extra-controls="controls,h264_profile=4,h264_level=10,video_bitrate=%s;" !'%data['bitrate'],
+            '"video/x-h264,profile=high, level=(string)4.2" ! '
+            'mpegtsmux name=mux ! '
+            'srtsink uri=srt://:%s/ latency=50 '%data['port']
+        ]
+        pipelineAudio = [
+            'alsasrc device=%s !'%data['audionCard'],
+            'audio/x-raw,rate=48000,channels=%s !'%data['audionChannel'],
+            'audioconvert ! avenc_aac bitrate=%s !'%data['audionbitrate'],
+            'aacparse ! queue ! mux.'
+
+        ]
     if data['audionCard'] != 'mute':
         arr = np.append(pipelineBase,pipelineAudio)
     else :
