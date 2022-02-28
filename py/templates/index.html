@@ -47,7 +47,7 @@
 
     <div class="input-group mb-3">
         <span class="input-group-text">服务器地址</span>
-        <input type="text" class="form-control" v-model="serverUrl" :readonly="serverType == 'local'">
+        <input type="text" class="form-control" v-model="serverUrl" :readonly="serverType == 'local'" >
     </div>
 
     <div class="input-group mb-3">
@@ -72,9 +72,10 @@
 
         <div class="input-group mb-3">
             <span class="input-group-text">格式</span>
-            <select class="form-select" aria-label="Default select example" v-model="streaming">
+            <select class="form-select" aria-label="Default select example" v-model="streaming" v-on:change="selectFormat">
                 <option value="rtmp">RTMP [TCP]</option>
-                <option value="rtsp" disabled>RTSP [TCP]</option>
+                <option value="rtsp">RTSP [TCP]仅视频</option>
+                <option value="hls" disabled>HLS [TCP]</option>
                 <option value="srt" disabled>SRT [UDP]</option>
             </select>
         </div>
@@ -93,8 +94,11 @@
 
         <div class="input-group mb-3">
             <span class="input-group-text">音频</span>
-            <select class="form-select" aria-label="Default select example" v-model="audionCar">
+            <select class="form-select" aria-label="Default select example" v-model="audionCard" v-if="streaming != 'rtsp'">
                 <option v-for="obj in config['audiocard']" :value="obj.value">((obj.name))</option>
+            </select>
+            <select class="form-select" aria-label="Default select example" v-model="audionCard" v-if="streaming == 'rtsp'">
+                <option value="mute">Mute</option>
             </select>
         </div>
 

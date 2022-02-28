@@ -85,33 +85,43 @@ def submit():
     data = json.loads(request.get_data(as_text=True))
     print(data)
     resolution = data['resolution'].split("x")
-    argsrtmpBase = [
-        'gst-launch-1.0',
-        '-vvv',
-        'v4l2src',
-        "device=%s !"%data['video'],
-        '"video/x-raw,width=%s,height=%s,framerate=%s/1,format=UYVY" !'%(resolution[0],resolution[1],data['fps']),
-        'v4l2h264enc',
-        'extra-controls="controls,h264_profile=4,h264_level=13,video_bitrate=%s;" !'%data['bitrate'],
-        '"video/x-h264,profile=high, level=(string)4.2" !',
-        'h264parse !',
-        'queue !',
-        'flvmux streamable=true name=mux !',
-        'rtmpsink location="rtmp://%s:1935/streaming"'%data['serverUrl']
-    ]
-    argsrtmpAudio = [
-        'alsasrc device=%s !'%data['audionCar'],
-        'audio/x-raw,rate=48000,channels=%s !'%data['audionChannel'],
-        'audioconvert !',
-        'avenc_aac bitrate=%s !'%data['audionbitrate'],
-        'aacparse !',
-        'queue !',
-        'mux.'
-    ]
-    if data['audionCar'] != 'mute':
-        arr = np.append(argsrtmpBase,argsrtmpAudio)
+    if data['streaming'] == 'rtmp' :
+        pipelineBase = [
+            'gst-launch-1.0',
+            '-vvv',
+            'v4l2src',
+            "device=%s !"%data['video'],
+            '"video/x-raw,width=%s,height=%s,framerate=%s/1,format=UYVY" !'%(resolution[0],resolution[1],data['fps']),
+            'v4l2h264enc',
+            'extra-controls="controls,h264_profile=4,h264_level=13,video_bitrate=%s;" !'%data['bitrate'],
+            '"video/x-h264,profile=high, level=(string)4.2" !',
+            'h264parse !',
+            'queue !',
+            'flvmux streamable=true name=mux !',
+            'rtmpsink location="rtmp://%s:%s/streaming"'%(data['serverUrl'],data['port'])
+        ]
+        pipelineAudio = [
+            'alsasrc device=%s !'%data['audionCard'],
+            'audio/x-raw,rate=48000,channels=%s !'%data['audionChannel'],
+            'audioconvert !',
+            'avenc_aac bitrate=%s !'%data['audionbitrate'],
+            'aacparse !',
+            'queue !',
+            'mux.'
+        ]
+    elif data['streaming'] == 'rtsp' :
+        pipelineBase = [
+            'gst-launch-1.0 -vvv v4l2src ! '
+            '"video/x-raw,width=%s,height=%s,framerate=%s/1,format=UYVY" !'%(resolution[0],resolution[1],data['fps']),
+            'v4l2h264enc extra-controls="controls,h264_profile=4,h264_level=13,video_bitrate=%s;" !'%data['bitrate'],
+            '"video/x-h264,profile=high, level=(string)4.2" ! '
+            'h264parse  ! '
+            'rtspclientsink name=s location="rtsp://%s:%s/streaming"'%(data['serverUrl'],data['port'])
+        ]
+    if data['audionCard'] != 'mute':
+        arr = np.append(pipelineBase,pipelineAudio)
     else :
-        arr = argsrtmpBase
+        arr = pipelineBase
     print(" ".join(arr))
     command = "nohup %s &"%" ".join(arr)
     os.system(command)

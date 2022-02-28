@@ -12,7 +12,7 @@ const app = {
             fps: "30",
             audionbitrate: "320000",
             audionChannel: 2,
-            audionCar: "mute",
+            audionCard: "mute",
             isStreaming: false,
             hostname: window.location.hostname,
             port: 1935
@@ -113,12 +113,13 @@ const app = {
                 "serverType": this.serverType,
                 "resolution": this.resolution,
                 "streaming": this.streaming,
+                "port": this.port,
                 "bitrate": this.bitrate,
                 "fps": this.fps,
                 "rate": this.rate,
                 "audionChannel": this.audionChannel,
                 "audionbitrate": this.audionbitrate,
-                "audionCar": this.audionCar,
+                "audionCard": this.audionCard,
                 "video": this.config.video,
             };
             axios.post(`submit`, data)
@@ -127,6 +128,18 @@ const app = {
                         that.isStreaming = true
                     }
                 })
+        },
+        selectFormat: function(e) {
+            var selected = e.target.options.selectedIndex
+            console.log(selected)
+            if(selected == 0){
+                this.streaming = "rtmp"
+                this.port = 1935
+            }else if(selected == 1){
+                this.streaming = "rtsp"
+                this.port = 8554
+                this.audionCard = 'mute'
+            }
         }
     }
 }
