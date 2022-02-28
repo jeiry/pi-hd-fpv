@@ -20,3 +20,7 @@ chmod -R 777 script.sh
 ```
 reboot
 ```
+
+### step 4
+
+访问  http://your-ip:777/
