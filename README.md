@@ -4,6 +4,8 @@
 
 这是beta版，还有很多Bug，如果有什么问题，可以到issues留言给我。
 
+支持树莓派 3/3b/4b(实测)/cm3/cm4(实测)/zero2
+
 2022/02/28 支持rtsp 支持srt listener模式
 
 ### step 1
