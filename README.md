@@ -22,6 +22,12 @@ cd /home/pi
 wget https://raw.githubusercontent.com/jeiry/pi-hd-fpv/main/script.sh
 chmod -R 777 script.sh
 ```
+或
+```
+cd /home/pi
+wget https://gitee.com/jeiry/pi-hd-fpv/raw/main/script.sh
+chmod -R 777 script.sh
+```
 
 ### step 2
 ```
