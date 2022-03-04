@@ -118,14 +118,19 @@ def submit():
             'h264parse  ! '
             'rtspclientsink name=s location="rtsp://%s:%s/streaming"'%(data['serverUrl'],data['port'])
         ]
-    elif data['streaming'] == 'srt':
+    elif data['streaming'] == 'srt' :
+        url = ''
+        port = data['port']
+        if data['srtmode'] == 'caller':
+            url = data['srtip']
+            port = data['srtport']
         pipelineBase = [
             'gst-launch-1.0 -vvv v4l2src ! '
             '"video/x-raw,width=%s,height=%s,framerate=%s/1,format=UYVY" !'%(resolution[0],resolution[1],data['fps']),
             'v4l2h264enc extra-controls="controls,h264_profile=4,h264_level=10,video_bitrate=%s;" !'%data['bitrate'],
             '"video/x-h264,profile=high, level=(string)4.2" ! '
             'mpegtsmux name=mux ! '
-            'srtsink uri=srt://:%s/ latency=50 '%data['port']
+            'srtsink uri=srt://%s:%s/ latency=50 '%(url,port)
         ]
         pipelineAudio = [
             'alsasrc device=%s !'%data['audionCard'],
@@ -166,4 +171,4 @@ def stopstreaming():
             os.system("kill -9 %s" % pid[0])
     return json.dumps({'code': 0, 'data': data})
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=777)
+    app.run(debug=True, host="0.0.0.0", port=776)

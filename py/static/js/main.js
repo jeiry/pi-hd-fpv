@@ -8,7 +8,7 @@ const app = {
             serverType: "local",
             resolution: "",
             streaming: "rtmp",
-            streamPath:"/streaming",
+            streamPath: "/streaming",
             bitrate: "2000000",
             fps: "30",
             audionbitrate: "320000",
@@ -16,7 +16,10 @@ const app = {
             audionCard: "mute",
             isStreaming: false,
             hostname: window.location.hostname,
-            port: 1935
+            port: 1935,
+            srtmode: 'listener',
+            srtip: '',
+            srtport: ''
         }
     },
     mounted: function () {
@@ -109,6 +112,12 @@ const app = {
             // fps: "30",
             // rate: "4800",
             // audionChannel: 1
+            if (this.srtmode == "caller") {
+                if (this.srtip.length < 7 && this.srtport.length < 2) {
+                    alert("请输入正确地址或端口")
+                    return
+                }
+            }
             let data = {
                 "serverUrl": this.serverUrl,
                 "serverType": this.serverType,
@@ -122,6 +131,9 @@ const app = {
                 "audionbitrate": this.audionbitrate,
                 "audionCard": this.audionCard,
                 "video": this.config.video,
+                "srtmode": this.srtmode,
+                "srtip": this.srtip,
+                "srtport": this.srtport,
             };
             axios.post(`submit`, data)
                 .then(res => {
@@ -130,22 +142,33 @@ const app = {
                     }
                 })
         },
-        selectFormat: function(e) {
+        selectFormat: function (e) {
             var selected = e.target.options.selectedIndex
             console.log(selected)
-            if(selected == 0){
+            this.srtmode = 'listener'
+            if (selected == 0) {
                 this.streaming = "rtmp"
                 this.streamPath = "/streaming"
                 this.port = 1935
-            }else if(selected == 1){
+            } else if (selected == 1) {
                 this.streaming = "rtsp"
                 this.streamPath = "/streaming"
                 this.port = 8554
                 this.audionCard = 'mute'
-            }else if(selected == 3){
+            } else if (selected == 3) {
                 this.streaming = "srt"
                 this.streamPath = "?mode=caller&latency=0"
                 this.port = 9999
+            }
+        },
+        selectSrtMode: function (e) {
+            var selected = e.target.options.selectedIndex
+            if (selected == 0) {
+                this.srtmode = 'listener'
+                this.streamPath = "?mode=caller&latency=0"
+            } else if (selected == 1) {
+                this.srtmode = 'caller'
+                this.streamPath = ""
             }
         }
     }
