@@ -44,3 +44,42 @@ reboot
 ### step 4
 
 访问  http://your-ip:777/
+
+## EC20 PCIE转USB网卡
+
+把网卡设置为ECM模式自动拨号
+
+以下命令查看USB网卡有没有插好，USB2.0已经足够。
+
+```
+/dev/tty* 
+```
+看到有 /dev/ttyUSB2 就代表usb已经正确插入并检测出来。
+
+设置ECM模式 一行一行输入。每输入一行都会返回 OK 。
+```
+cat /dev/ttyUSB2 & echo -e "AT+QCFG=\"usbnet\",1\r\n" > /dev/ttyUSB2 
+cat /dev/ttyUSB2 & echo -e "AT+CFUN=1,1\r\n" >/dev/ttyUSB2
+```
+设置中国电信4G APN
+电信：名称ctlte，用户名ctnet@mycdma.cn，密码vnet.mobi
+移动：名称cmnet
+联通：名称uninet
+
+```
+cat /dev/ttyUSB2 & echo -e "AT+CGDCONT=1,\"IP\",\"ctlte\",\"ctnet@mycdma.cn\",\"vnet.mobi\"\r\n" > /dev/ttyUSB2
+cat /dev/ttyUSB2 & echo -e "AT+CGACT=1,1\r\n" > /dev/ttyUSB2
+cat /dev/ttyUSB2 & echo -e "AT+CFUN=1,1\r\n" >/dev/ttyUSB2
+
+```
+然后重启
+```
+reboot
+```
+
+重启后输入
+```
+ifconfig
+```
+看到 usb0这个网卡，并且inet上有ip 192.168.x.x 代表已经联网成功
+
