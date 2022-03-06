@@ -52,7 +52,7 @@ reboot
 以下命令查看USB网卡有没有插好，USB2.0已经足够。
 
 ```
-/dev/tty* 
+ls /dev/tty* 
 ```
 看到有 /dev/ttyUSB2 就代表usb已经正确插入并检测出来。
 
@@ -72,7 +72,7 @@ cat /dev/ttyUSB2 & echo -e "AT+CGACT=1,1\r\n" > /dev/ttyUSB2
 cat /dev/ttyUSB2 & echo -e "AT+CFUN=1,1\r\n" >/dev/ttyUSB2
 
 ```
-然后重启
+然后重启 非必须
 ```
 reboot
 ```
