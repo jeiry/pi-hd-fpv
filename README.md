@@ -83,3 +83,8 @@ ifconfig
 ```
 看到 usb0这个网卡，并且inet上有ip 192.168.x.x 代表已经联网成功
 
+ping 测试
+```
+ping -I usb0 www.baidu.com
+```
+使用usb0这个网卡ping百度。能ping通就是成功了。
