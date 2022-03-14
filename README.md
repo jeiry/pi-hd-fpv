@@ -10,6 +10,10 @@
 
 cm4可以到60fps、树莓派只支持h264编码。
 
+服务器端使用的是 rtsp-simple-server
+
+推流使用的是 gstreamer
+
 ### 更新内容
 
 2022/03/04 添加srt caller 模式
