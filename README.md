@@ -92,3 +92,9 @@ ping 测试
 ping -I usb0 www.baidu.com
 ```
 使用usb0这个网卡ping百度。能ping通就是成功了。
+
+## 把树莓派变成AP
+
+开源库 https://github.com/RaspAP/raspap-webgui
+
+把树莓派变成AP（可以理解为一个路由）的目的是你在外面，用USB网卡上网。你无法连接到web去设置。所以这个时候，你可以用手机wifi连接到树莓派AP上，打开 http://10.3.141.1:777/ 就能进入web配置推流到外网服务器。
