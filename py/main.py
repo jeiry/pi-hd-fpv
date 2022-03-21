@@ -98,7 +98,7 @@ def submit():
             'h264parse !',
             'queue !',
             'flvmux streamable=true name=mux !',
-            'rtmpsink location="rtmp://%s:%s/streaming"'%(data['serverUrl'],data['port'])
+            'rtmpsink location="rtmp://%s:%s/%s"'%(data['serverUrl'],data['port'],data['streamPath'])
         ]
         pipelineAudio = [
             'alsasrc device=%s !'%data['audionCard'],
@@ -116,7 +116,7 @@ def submit():
             'v4l2h264enc extra-controls="controls,h264_profile=4,h264_level=13,video_bitrate=%s;" !'%data['bitrate'],
             '"video/x-h264,profile=high, level=(string)4.2" ! '
             'h264parse  ! '
-            'rtspclientsink name=s location="rtsp://%s:%s/streaming"'%(data['serverUrl'],data['port'])
+            'rtspclientsink name=s location="rtsp://%s:%s/%s"'%(data['serverUrl'],data['port'],data['streamPath'])
         ]
     elif data['streaming'] == 'srt' :
         url = ''
@@ -171,4 +171,4 @@ def stopstreaming():
             os.system("kill -9 %s" % pid[0])
     return json.dumps({'code': 0, 'data': data})
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=776)
+    app.run(debug=True, host="0.0.0.0", port=777)

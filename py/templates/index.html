@@ -41,18 +41,28 @@
     </div>
     <div class="form-check form-check-inline  mb-3">
         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="remote"
-               v-model="serverType" @change="changeServerType($event)" disabled>
+               v-model="serverType" @change="changeServerType($event)">
         <label class="form-check-label" for="inlineRadio2">远程</label>
     </div>
 
     <div class="input-group mb-3">
         <span class="input-group-text">服务器地址</span>
-        <input type="text" class="form-control" v-model="serverUrl" :readonly="serverType == 'local'">
+        <input type="text" class="form-control" v-model="serverUrl" :readonly="serverType == 'local'" @change="changeUrl($event)">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">端口</span>
+        <input type="text" class="form-control" v-model="port" :readonly="serverType == 'local'" >
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">路径</span>
+        <input type="text" class="form-control" v-model="streamPath" :readonly="serverType == 'local'" >
     </div>
 
     <div class="input-group mb-3" v-if="srtmode != 'caller'">
         <span class="input-group-text">拉流地址</span>
-        <input type="text" class="form-control" :value="streaming+'://'+hostname+':'+port+''+streamPath" id="fullurl">
+        <input type="text" class="form-control" :value="streaming+'://'+hostname+':'+port+'/'+streamPath" id="fullurl">
         <button class="btn btn-outline-secondary btn" type="button" id="button-addon2" data-clipboard-target="#fullurl">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">

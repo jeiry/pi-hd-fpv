@@ -8,7 +8,7 @@ const app = {
             serverType: "local",
             resolution: "",
             streaming: "rtmp",
-            streamPath: "/streaming",
+            streamPath: "streaming",
             bitrate: "2000000",
             fps: "30",
             audionbitrate: "320000",
@@ -17,6 +17,7 @@ const app = {
             isStreaming: false,
             hostname: window.location.hostname,
             port: 1935,
+            tempPort:1935,
             srtmode: 'listener',
             srtip: '',
             srtport: ''
@@ -97,10 +98,20 @@ const app = {
             var optionText = event.target.value;
             if (optionText == "local") {
                 this.serverUrl = "127.0.0.1"
+                this.port = this.tempPort
+                this.streamPath = "streaming"
             } else {
                 this.serverUrl = ""
             }
             console.log(optionText);
+        },
+        changeUrl(event) {
+            var optionText = event.target.value;
+            this.hostname = optionText
+        },
+        changePort(event) {
+            var optionText = event.target.value;
+            this.port = optionText
         },
         submit() {
             var that = this
@@ -123,6 +134,7 @@ const app = {
                 "serverType": this.serverType,
                 "resolution": this.resolution,
                 "streaming": this.streaming,
+                'streamPath':this.streamPath,
                 "port": this.port,
                 "bitrate": this.bitrate,
                 "fps": this.fps,
@@ -150,15 +162,18 @@ const app = {
                 this.streaming = "rtmp"
                 this.streamPath = "/streaming"
                 this.port = 1935
+                this.tempPort = 1935
             } else if (selected == 1) {
                 this.streaming = "rtsp"
                 this.streamPath = "/streaming"
                 this.port = 8554
+                this.tempPort = 8554
                 this.audionCard = 'mute'
             } else if (selected == 3) {
                 this.streaming = "srt"
                 this.streamPath = "?mode=caller&latency=0"
                 this.port = 9999
+                this.tempPort = 9999
             }
         },
         selectSrtMode: function (e) {
