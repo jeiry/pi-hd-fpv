@@ -11,7 +11,7 @@ sudo apt-get -y install gstreamer1.0-plugins-good
 sudo apt-get -y install gstreamer1.0-plugins-bad
 sudo apt-get -y install gstreamer1.0-alsa
 sudo apt-get -y install gstreamer1.0-libav
-sudo apt-get -y apt install gstreamer1.0-rtsp
+sudo apt-get -y install gstreamer1.0-rtsp
 sudo apt-get -y install python3-pip
 sudo apt-get -y install libatlas-base-dev
 sudo apt-get -y install git
